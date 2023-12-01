@@ -1,0 +1,1 @@
+(()=>{"use strict";const e=window.wp.element;function n(){return(0,e.createElement)("div",null,"App")}window.addEventListener("load",(function(){(0,e.render)((0,e.createElement)(n,null),document.querySelector("#threejs-wp-app"))}),!1)})();

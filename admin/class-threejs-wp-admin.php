@@ -59,7 +59,7 @@ class Threejs_Wp_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_styles() {
+	public function enqueue_styles( $hook ) {
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -72,9 +72,17 @@ class Threejs_Wp_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
+		$admin_css_url = plugin_dir_url( __FILE__ ) . 'css/';
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/threejs-wp-admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, $admin_css_url . 'threejs-wp-admin.css', array(), $this->version, 'all' );
 
+		// Load only on ?page=threejs-wp-menu.
+		if ('toplevel_page_threejs-wp-menu' === $hook) {
+
+			// Load our style.css.
+			wp_register_style( 'threejs-wp-menu', $admin_css_url . 'threejs-wp-menu/style.css' );
+			wp_enqueue_style('threejs-wp-menu');
+		}
 	}
 
 	/**
@@ -82,7 +90,7 @@ class Threejs_Wp_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_scripts() {
+	public function enqueue_scripts( $hook ) {
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -95,9 +103,46 @@ class Threejs_Wp_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
+		$admin_js_url = plugin_dir_url( __FILE__ ) . 'js/';
+		$admin_js_path = plugin_dir_path( __FILE__ ) . 'js/';
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/threejs-wp-admin.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, $admin_js_url . 'threejs-wp-admin.js', array( 'jquery' ), $this->version, false );
 
+		// Load only on ?page=threejs-wp-menu.
+		if ('toplevel_page_threejs-wp-menu' === $hook) {
+			// Load the required WordPress packages.
+
+			// Automatically load imported dependencies and assets version.
+			$asset_file = require_once $admin_js_path . 'threejs-wp-menu/build/index.asset.php';
+
+			// Enqueue CSS dependencies.
+			foreach ($asset_file['dependencies'] as $style) {
+				wp_enqueue_style($style);
+			}
+
+			// Load our app.js.
+			wp_register_script(
+				'threejs-wp-menu',
+				$admin_js_url . 'threejs-wp-menu/build/index.js',
+				$asset_file['dependencies'],
+				$asset_file['version']
+			);
+			wp_enqueue_script('threejs-wp-menu');
+		}
+	}
+
+	public function option_page() {
+		add_menu_page(
+			__('ThreeJS WP', 'gutenberg'),
+			__('ThreeJS WP', 'gutenberg'),
+			'manage_options',
+			'threejs-wp-menu',
+			function () {
+				echo '<div class="wrap"><div id="threejs-wp-app"></div></div>';
+			},
+			'dashicons-schedule',
+			20
+		);
 	}
 
 }

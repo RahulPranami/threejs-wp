@@ -1,0 +1,20 @@
+{
+    "name": "threejs-wp-menu",
+    "version": "1.0.0",
+    "private": true,
+    "description": "ThreeJS WordPress Menu Page",
+    "author": "rahulpranami",
+    "license": "GPL-2.0-or-later",
+    "keywords": [ "WordPress", "block" ],
+    "main": "build/index.js",
+    "devDependencies": {
+        "@wordpress/scripts": "^18.0.1"
+    },
+    "scripts": {
+        "build": "wp-scripts build",
+        "format": "wp-scripts format",
+        "lint:js": "wp-scripts lint-js",
+        "packages-update": "wp-scripts packages-update",
+        "start": "wp-scripts start"
+    }
+}
