@@ -5,7 +5,10 @@
     "description": "ThreeJS WordPress Menu Page",
     "author": "rahulpranami",
     "license": "GPL-2.0-or-later",
-    "keywords": [ "WordPress", "block" ],
+    "keywords": [
+        "WordPress",
+        "block"
+    ],
     "main": "build/index.js",
     "devDependencies": {
         "@wordpress/scripts": "^18.0.1"
@@ -16,5 +19,12 @@
         "lint:js": "wp-scripts lint-js",
         "packages-update": "wp-scripts packages-update",
         "start": "wp-scripts start"
+    },
+    "dependencies": {
+        "@react-three/drei": "^9.89.3",
+        "@react-three/fiber": "^8.15.12",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "three": "^0.159.0"
     }
 }
