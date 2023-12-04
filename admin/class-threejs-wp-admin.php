@@ -131,6 +131,12 @@ class Threejs_Wp_Admin {
 		}
 	}
 
+	public static function allow_glb($mimes)
+	{
+		$mimes['glb'] = 'application/octet-stream';
+		return $mimes;
+	}
+
 	public function option_page() {
 		add_menu_page(
 			__('ThreeJS WP', 'gutenberg'),
