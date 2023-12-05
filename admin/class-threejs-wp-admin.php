@@ -80,9 +80,13 @@ class Threejs_Wp_Admin {
 		if ('toplevel_page_threejs-wp-menu' === $hook) {
 
 			// Load our style.css.
-			wp_register_style( 'threejs-wp-menu', $admin_css_url . 'threejs-wp-menu/style.css' );
-			wp_enqueue_style('threejs-wp-menu');
+			wp_enqueue_style( 'threejs-wp-menu', $admin_css_url . 'threejs-wp-menu.css' );
 		}
+
+		if ('threejs-wp_page_threejs-wp-modals' === $hook) {
+			wp_enqueue_style( 'threejs-wp-menu', $admin_css_url . 'threejs-wp-modals.css' );
+		}
+
 	}
 
 	/**
@@ -110,24 +114,28 @@ class Threejs_Wp_Admin {
 
 		// Load only on ?page=threejs-wp-menu.
 		if ('toplevel_page_threejs-wp-menu' === $hook) {
-			// Load the required WordPress packages.
-
 			// Automatically load imported dependencies and assets version.
 			$asset_file = require_once $admin_js_path . 'threejs-wp-menu/build/index.asset.php';
 
 			// Enqueue CSS dependencies.
-			foreach ($asset_file['dependencies'] as $style) {
+			foreach ($asset_file['dependencies'] as $style)
 				wp_enqueue_style($style);
-			}
 
 			// Load our app.js.
-			wp_register_script(
-				'threejs-wp-menu',
-				$admin_js_url . 'threejs-wp-menu/build/index.js',
-				$asset_file['dependencies'],
-				$asset_file['version']
-			);
-			wp_enqueue_script('threejs-wp-menu');
+			wp_enqueue_script('threejs-wp-menu', $admin_js_url . 'threejs-wp-menu/build/index.js', $asset_file['dependencies'], $asset_file['version']);
+		}
+
+		// Load only on ?page=threejs-threejs-wp-modals.
+		if ('threejs-wp_page_threejs-wp-modals' === $hook) {
+			// Automatically load imported dependencies and assets version.
+			$asset_file = require_once $admin_js_path . 'threejs-wp-modals/build/index.asset.php';
+
+			// Enqueue CSS dependencies.
+			foreach ($asset_file['dependencies'] as $style)
+				wp_enqueue_style($style);
+
+			// Load our app.js.
+			wp_enqueue_script('threejs-wp-modals', $admin_js_url . 'threejs-wp-modals/build/index.js', $asset_file['dependencies'], $asset_file['version']);
 		}
 	}
 
@@ -148,6 +156,17 @@ class Threejs_Wp_Admin {
 			},
 			'dashicons-schedule',
 			20
+		);
+
+		add_submenu_page(
+			'threejs-wp-menu',
+			'ThreeJS WP Modals',
+			'ThreeJS WP Modals',
+			'manage_options',
+			'threejs-wp-modals',
+			function(){
+				echo '<div class="wrap"><div id="threejs-wp-modals"></div></div>';
+			}
 		);
 	}
 
