@@ -2,3 +2,19 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
+
+#wpbody-content {
+    height: 80vh;
+}
+
+#wpbody-content .wrap {
+    height: 100%;
+}
+
+#threejs-wp-app {
+    height: 100%;
+}
+
+#threejs-wp-app .canvas {
+    height: 100%;
+}

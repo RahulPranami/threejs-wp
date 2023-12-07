@@ -22,24 +22,21 @@ export default function App() {
     }, 10);
 
     return (
-        <div>
-            App
-            <Canvas>
-                <Box
-                    scale={[2, 2, 2]}
-                    position={[0, 0, 0]}
-                    ref={boxRef}
-                    material={[
-                        new MeshBasicMaterial({ color: "red" }),
-                        new MeshBasicMaterial({ color: "green" }),
-                        new MeshBasicMaterial({ color: "blue" }),
-                        new MeshBasicMaterial({ color: "yellow" }),
-                        new MeshBasicMaterial({ color: "purple" }),
-                        new MeshBasicMaterial({ color: "orange" }),
-                    ]}
-                ></Box>
-                <OrbitControls />
-            </Canvas>
-        </div>
+        <Canvas className="canvas">
+            <Box
+                scale={[2, 2, 2]}
+                position={[0, 0, 0]}
+                ref={boxRef}
+                material={[
+                    new MeshBasicMaterial({ color: "red" }),
+                    new MeshBasicMaterial({ color: "green" }),
+                    new MeshBasicMaterial({ color: "blue" }),
+                    new MeshBasicMaterial({ color: "yellow" }),
+                    new MeshBasicMaterial({ color: "purple" }),
+                    new MeshBasicMaterial({ color: "orange" }),
+                ]}
+            ></Box>
+            <OrbitControls />
+        </Canvas>
     );
 }

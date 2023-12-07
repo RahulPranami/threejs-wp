@@ -13,6 +13,12 @@ import { useSelect, useDispatch } from "@wordpress/data";
 import { store as coreDataStore, useEntityRecords } from "@wordpress/core-data";
 import { store as noticesStore } from "@wordpress/notices";
 import { decodeEntities } from "@wordpress/html-entities";
+import { ErrorBoundary } from "react-error-boundary";
+import Model from "./components/modal";
+
+function ModelErrorFallback({ error }) {
+    return <div>Error loading model: {error.message}</div>;
+}
 
 export default function App() {
     const notices = useSelect(
@@ -34,53 +40,56 @@ export default function App() {
     //     }
     // }, 10);
 
-    const [searchModal, setSearchModal] = useState("");
-    // const data = useEntityRecords("postType", "page", { per_page: 20 });
-    // const data = useEntityRecords('root', 'attachment', { per_page: 20, mime_type: 'model/gltf-binary' });
-    // console.log(data);
+    const query = {};
 
-    const { modals, hasResolvedModals } = useSelect(
-        (select) => {
-            // const query = {};
-            const query = {
-                meta_query: [
-                    {
-                        key: "mime_type",
-                        value: "application/octet-stream",
-                        compare: "=",
-                    },
-                ],
-            };
+    // if (searchModal) {
+    //     query.search = searchModal;
+    // }
 
-            if (searchModal) {
-                query.search = searchModal;
-            }
-            return {
-                modals: select(coreDataStore).getEntityRecords(
-                    "postType",
-                    "attachment",
-                    query
-                ),
-                hasResolvedModals: select(coreDataStore).hasFinishedResolution(
-                    "getEntityRecords",
-                    ["postType", "attachment", query]
-                ),
-            };
-        },
-        [searchModal]
-    );
+    const { hasResolved: hasResolvedModals, records: modals } =
+        useEntityRecords("root", "media", query);
+    // console.log(modals);
+
+    // const { modals, hasResolvedModals } = useSelect(
+    //     (select) => {
+    //         const query = {};
+
+    //         if (searchModal) {
+    //             query.search = searchModal;
+    //         }
+    //         return {
+    //             modals: select(coreDataStore).getEntityRecords(
+    //                 "root",
+    //                 "media",
+    //                 query
+    //             ),
+    //             hasResolvedModals: select(coreDataStore).hasFinishedResolution(
+    //                 "getEntityRecords",
+    //                 ["root", "media", query]
+    //             ),
+    //         };
+    //     },
+    //     [searchModal]
+    // );
+
+    const modalFiles =
+        modals?.filter(
+            (file) => file.mime_type === "application/octet-stream"
+        ) || [];
 
     if (!hasResolvedModals) {
         return <Spinner />;
     }
-    if (!modals?.length) {
+    if (!modalFiles?.length) {
         return <div>No results</div>;
     }
+    console.log(modalFiles);
 
     return (
-        <div>
-            App
-            {/* <Canvas>
+        <>
+            <div>
+                <ErrorBoundary FallbackComponent={ModelErrorFallback}>
+                    {/* <Canvas>
                 <Box
                     scale={[2, 2, 2]}
                     position={[0, 0, 0]}
@@ -96,41 +105,52 @@ export default function App() {
                 ></Box>
                 <OrbitControls />
             </Canvas> */}
-            <div className="d-flex">
-                <div>
-                    <h3> Modals List </h3>
-                    {/* <SearchControl
+                    <div className="d-flex">
+                        <div>
+                            <h3> Modals List </h3>
+                            {/* <SearchControl
                         onChange={setSearchPage}
                         value={searchModal}
                     /> */}
-                    <table className="wp-list-table widefat fixed striped table-view-list">
-                        <thead>
-                            <tr>
-                                <th>Page Title</th>
-                                <td style={{ width: 120 }}>Actions</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {modals?.map((page) => (
-                                <tr key={page.id}>
-                                    <td>
-                                        {decodeEntities(page.title.rendered)}
-                                    </td>
-                                    <td>
-                                        {/* <PageEditButton pageId={page.id} /> */}
-                                        {/* <DeletePageButton pageId={page.id} /> */}
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+                            <table className="wp-list-table widefat fixed striped table-view-list">
+                                <thead>
+                                    <tr>
+                                        <th>Page Title</th>
+                                        <td style={{ width: 120 }}>Actions</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {modalFiles?.map((modalFile) => (
+                                        <tr key={modalFile.id}>
+                                            <td>
+                                                {decodeEntities(
+                                                    modalFile.title.rendered
+                                                )}
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <Model
+                                                        modalFile={
+                                                            modalFile.source_url
+                                                        }
+                                                    />
+                                                </div>
+                                                {/* <PageEditButton pageId={page.id} /> */}
+                                                {/* <DeletePageButton pageId={page.id} /> */}
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <SnackbarList
+                        notices={snackbarNotices}
+                        className="components-editor-notices__snackbar"
+                        onRemove={removeNotice}
+                    />
+                </ErrorBoundary>
             </div>
-            <SnackbarList
-                notices={snackbarNotices}
-                className="components-editor-notices__snackbar"
-                onRemove={removeNotice}
-            />
-        </div>
+        </>
     );
 }
