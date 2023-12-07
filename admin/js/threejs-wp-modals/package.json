@@ -1,29 +1,32 @@
 {
-    "name": "threejs-wp-menu",
-    "version": "1.0.0",
-    "private": true,
-    "description": "ThreeJS WordPress Menu Page",
-    "author": "rahulpranami",
-    "license": "GPL-2.0-or-later",
-    "keywords": [
-        "WordPress",
-        "block"
-    ],
-    "main": "build/index.js",
-    "devDependencies": {
-        "@wordpress/scripts": "^26.18.0"
-    },
-    "scripts": {
-        "build": "wp-scripts build",
-        "format": "wp-scripts format",
-        "lint:js": "wp-scripts lint-js",
-        "packages-update": "wp-scripts packages-update",
-        "start": "wp-scripts start"
-    },
-    "dependencies": {
-        "@react-three/drei": "^9.89.3",
-        "@react-three/fiber": "^8.15.12",
-        "react-error-boundary": "^4.0.11",
-        "three": "^0.159.0"
-    }
+  "name": "threejs-wp-modals",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "vite-build": "vite build",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "build": "wp-scripts build",
+    "format": "wp-scripts format",
+    "lint:js": "wp-scripts lint-js",
+    "packages-update": "wp-scripts packages-update",
+    "start": "wp-scripts start"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.37",
+    "@types/react-dom": "^18.2.15",
+    "@vitejs/plugin-react": "^4.2.0",
+    "@wordpress/scripts": "^26.12.0",
+    "eslint": "^8.53.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.4",
+    "vite": "^5.0.0"
+  }
 }

@@ -73,6 +73,7 @@ class Threejs_Wp_Admin {
 		 * class.
 		 */
 		$admin_css_url = plugin_dir_url( __FILE__ ) . 'css/';
+		$admin_js_url = plugin_dir_url( __FILE__ ) . 'js/';
 
 		wp_enqueue_style( $this->plugin_name, $admin_css_url . 'threejs-wp-admin.css', array(), $this->version, 'all' );
 
@@ -84,7 +85,8 @@ class Threejs_Wp_Admin {
 		}
 
 		if ('threejs-wp_page_threejs-wp-modals' === $hook) {
-			wp_enqueue_style( 'threejs-wp-menu', $admin_css_url . 'threejs-wp-modals.css' );
+			// wp_enqueue_style( 'threejs-wp-menu', $admin_css_url . 'threejs-wp-modals.css' );
+			wp_enqueue_style('threejs-wp-modals', $admin_js_url . 'threejs-wp-modals/build/index.css');
 		}
 
 	}
@@ -135,7 +137,7 @@ class Threejs_Wp_Admin {
 				wp_enqueue_style($style);
 
 			// Load our app.js.
-			wp_enqueue_script('threejs-wp-modals', $admin_js_url . 'threejs-wp-modals/build/index.js', $asset_file['dependencies'], $asset_file['version']);
+			wp_enqueue_script('threejs-wp-modals', $admin_js_url . 'threejs-wp-modals/build/index.js', $asset_file['dependencies'], $asset_file['version'], true);
 		}
 	}
 
