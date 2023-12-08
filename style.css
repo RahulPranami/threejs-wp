@@ -1,0 +1,21 @@
+#toplevel_page_vite-plugin .wp-menu-image img {
+    padding-top: 6px;
+    height: 20px;
+}
+
+#wpbody-content {
+    height: 90vh;
+    padding-bottom: 0;
+}
+
+#wpbody-content .wrap {
+    height: 100%;
+}
+
+#wpbody-content .wrap #vite-plugin {
+    height: inherit;
+}
+
+#vite-plugin .canvasWrapper {
+    height: inherit;
+}
