@@ -148,6 +148,8 @@ class Threejs_Wp_Admin {
 	}
 
 	public function option_page() {
+        $icon_url = plugin_dir_url(__FILE__) . 'images/threejs.svg';
+
 		add_menu_page(
 			__('ThreeJS WP', 'gutenberg'),
 			__('ThreeJS WP', 'gutenberg'),
@@ -156,7 +158,7 @@ class Threejs_Wp_Admin {
 			function () {
 				echo '<div class="wrap"><div id="threejs-wp-app"></div></div>';
 			},
-			'dashicons-schedule',
+            $icon_url,
 			20
 		);
 
