@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+// import { useState } from "react";
 // import reactLogo from "./assets/react.svg";
 // import viteLogo from "./assets/vite.svg";
 // import { useState, useRef } from "react";
@@ -19,7 +19,6 @@ import { decodeEntities } from "@wordpress/html-entities";
 // import { ErrorBoundary } from "react-error-boundary";
 import Modal from "./components/Modal";
 import "./App.css";
-import ModalComponent from "./components/ModalComponent";
 
 function App() {
     const [count, setCount] = useState(0);
@@ -66,21 +65,13 @@ function App() {
                                 {decodeEntities(modalFile.title.rendered)}
                             </td>
                             <td>
-                                <Canvas className="canvas">
-                                    <Suspense fallback={null}>
-                                        <ModalComponent
-                                            modalFile={modalFile.source_url}
-                                        />
-                                    </Suspense>
-                                    {/* <div className="card"> */}
-                                    {/* <div> */}
-                                    {/* <Modal modalFile={modalFile.source_url} /> */}
-                                    {/* </div> */}
-                                    {/* <PageEditButton pageId={page.id} /> */}
-                                    {/* <DeletePageButton pageId={page.id} /> */}
-                                    {/* </div> */}
-                                    <OrbitControls />
-                                </Canvas>
+                                {/* <div className="card"> */}
+                                {/* <div> */}
+                                {/* <Modal modalFile={modalFile.source_url} /> */}
+                                {/* </div> */}
+                                {/* <PageEditButton pageId={page.id} /> */}
+                                {/* <DeletePageButton pageId={page.id} /> */}
+                                {/* </div> */}
                             </td>
                         </tr>
                     ))}
